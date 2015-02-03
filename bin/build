@@ -1,4 +1,5 @@
+lein uberjar
 lein less once
 lein minify-assets
-lein uberjar
+
 
