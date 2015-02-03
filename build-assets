@@ -1,0 +1,3 @@
+lein less once
+lein minify-assets
+

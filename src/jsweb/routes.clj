@@ -8,6 +8,6 @@
 ;; top level routing
 
 (defroutes app
-           (GET "/" [] (templates/home))
+           (GET "/" [] (templates/home {:title "jSolutions Ltd"}))
            (route/resources "/")
            (route/not-found "not found"))
