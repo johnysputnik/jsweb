@@ -15,15 +15,9 @@
             [environ/environ.lein "0.2.1"]]
   :less {:source-paths ["src/less"]
          :target-path "target/temp/css"}
-  :minify-assets {:assets {"target/public/css/stylesheet.min.css" "target/temp/css"
-                           "target/public/js/script.js" "src/js"}}
+  :minify-assets {:assets {"resources/public/css/stylesheet.min.css" "target/temp/css"
+                           "resources/public/js/script.js" "src/js"}}
   :uberjar-name "jsolutions-web-standalone.jar"
   :profiles {:production {:env {:production true}}})
 
-; lein less once
-; lein minify-assets
-; lein compile
-
-; :hooks [leiningen.less]
-; :hooks [minify-assets.plugin/hooks]
 
