@@ -8,6 +8,7 @@
 @highlight1   : #8bd1eb;
 @highlight2   : #ff4040;
 @background   : #fafafa;
+@header       : #f0f0f0;
 
 
 /* social fonts */
@@ -24,8 +25,65 @@
   font-style: normal;
 }
 
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ */
 
-/* default style for document */
+::-moz-selection {
+  background: @highlight1;
+  text-shadow: none;
+}
+
+::selection {
+  background: @highlight1;
+  text-shadow: none;
+}
+
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* Author's custom styles */
+
 
 html {
   color: @normaltext;
@@ -35,13 +93,29 @@ html {
   line-height: 1.4;
 }
 
+
 h1,
 h2,
 h3 {
   font-weight: 300;
 }
 
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid @secondary;
+  margin: 1em 0;
+  padding: 0;
+}
 
+#main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 960px;
+  background-color: @paper;
+  height: 100%;
+}
 
 #header {
 
@@ -53,6 +127,7 @@ h3 {
   nav{
     padding-left: 20px;
     padding-right: 20px;
+    letter-spacing: 0.05em;
   }
 
   nav,
@@ -60,7 +135,7 @@ h3 {
 
     a {
       text-decoration: none;
-      color: @normaltext;
+      color: @secondary;
     }
 
     a:hover {
@@ -89,6 +164,7 @@ h3 {
     float: right;
     font-family: "Mono Social Icons Font";
     font-size:  2.2em;
+    letter-spacing: 0em;
   }
 
   hr {
@@ -98,267 +174,172 @@ h3 {
 
 }
 
+#content {
+  margin-top: 40px;
 
+  article {
+    padding-left: 20px;
+    padding-right: 20px;
 
-  /*
-   * Remove text-shadow in selection highlight:
-   * https://twitter.com/miketaylr/status/12228805301
-   *
-   * These selection rule sets have to be separate.
-   * Customize the background color to match your design.
-   */
+    a {
+      text-decoration: none;
+      color: @secondary;
+    }
 
-  ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+    a:hover {
+      color: @highlight2;
+    }
   }
 
-  ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+  h3 {
+    color: @highlight2;
+    padding-top: 40px;
   }
 
-  /*
-   * A better looking default horizontal rule
-   */
-
-  hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  .initial {
+    font-variant: small-caps;
+    font-size: 1.1em;
   }
+}
 
-  /*
-   * Remove the gap between audio, canvas, iframes,
-   * images, videos and the bottom of their containers:
-   * https://github.com/h5bp/html5-boilerplate/issues/440
-   */
 
-  audio,
-  canvas,
-  iframe,
-  img,
-  svg,
-  video {
-    vertical-align: middle;
-  }
+/* Helper classes */
 
-  /*
-   * Remove default fieldset styles.
-   */
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
 
-  fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
-  }
+.invisible {
+  visibility: hidden;
+}
 
-  /*
-   * Allow only vertical resizing of textareas.
-   */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
 
-  textarea {
-    resize: vertical;
-  }
+.clearfix:after {
+  clear: both;
+}
 
-  /* ==========================================================================
-     Browser Upgrade Prompt
-     ========================================================================== */
+/* Media queries */
 
-  .browserupgrade {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-  }
-
-  /* ==========================================================================
-     Author's custom styles
-     ========================================================================== */
-
+@media (max-width:640px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
 
   #main {
-    margin-left: auto;
-    margin-right: auto;
-    width: 960px;
-    background-color: @paper;
-    height: 100%;
+    width: 100%;
   }
 
+  #header {
 
+    background-color: @header;
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    border-bottom: 1px solid @secondary;
 
+    nav,
+    #icons,
+    h1,
+    h2{
+      float: none;
+      text-align: center;
+    }
+  }
 
+  #content {
+    margin-top: 10px;
+  }
+}
 
+@media (min-width:641px) and (max-width:960px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  #main {
+    width: 100%;
+  }
 
-  /* ==========================================================================
-     Helper classes
-     ========================================================================== */
+  #header {
+    background-color: @header;
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    border-bottom: 1px solid @secondary;
+  }
+}
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                                 http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
 
   /*
-   * Hide visually and from screen readers:
-   * http://juicystudio.com/article/screen-readers-display-none.php
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
    */
 
-  .hidden {
-    display: none !important;
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  #icons {
     visibility: hidden;
   }
-
-  /*
-   * Hide only visually, but have it available for screen readers:
-   * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
-   */
-
-  .visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-
-  /*
-   * Extends the .visuallyhidden class to allow the element
-   * to be focusable when navigated to via the keyboard:
-   * https://www.drupal.org/node/897638
-   */
-
-  .visuallyhidden.focusable:active,
-  .visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
-  }
-
-  /*
-   * Hide visually and from screen readers, but maintain layout
-   */
-
-  .invisible {
-    visibility: hidden;
-  }
-
-  /*
-   * Clearfix: contain floats
-   *
-   * For modern browsers
-   * 1. The space content is one way to avoid an Opera bug when the
-   *    `contenteditable` attribute is included anywhere else in the document.
-   *    Otherwise it causes space to appear at the top and bottom of elements
-   *    that receive the `clearfix` class.
-   * 2. The use of `table` rather than `block` is only necessary if using
-   *    `:before` to contain the top-margins of child elements.
-   */
-
-  .clearfix:before,
-  .clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-  }
-
-  .clearfix:after {
-    clear: both;
-  }
-
-  /* ==========================================================================
-     EXAMPLE Media Queries for Responsive Design.
-     These examples override the primary ('mobile first') styles.
-     Modify as content requires.
-     ========================================================================== */
-
-  @media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
-  }
-
-  @media print,
-  (-o-min-device-pixel-ratio: 5/4),
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
-  }
-
-  /* ==========================================================================
-     Print styles.
-     Inlined to avoid the additional HTTP request:
-     http://www.phpied.com/delay-loading-your-print-css/
-     ========================================================================== */
-
-  @media print {
-    *,
-    *:before,
-    *:after {
-      background: transparent !important;
-      color: #000 !important; /* Black prints faster:
-                                   http://www.sanbeiji.com/archives/953 */
-      box-shadow: none !important;
-      text-shadow: none !important;
-    }
-
-    a,
-    a:visited {
-      text-decoration: underline;
-    }
-
-    a[href]:after {
-      content: " (" attr(href) ")";
-    }
-
-    abbr[title]:after {
-      content: " (" attr(title) ")";
-    }
-
-    /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
-
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-      content: "";
-    }
-
-    pre,
-    blockquote {
-      border: 1px solid #999;
-      page-break-inside: avoid;
-    }
-
-    /*
-     * Printing Tables:
-     * http://css-discuss.incutio.com/wiki/Printing_Tables
-     */
-
-    thead {
-      display: table-header-group;
-    }
-
-    tr,
-    img {
-      page-break-inside: avoid;
-    }
-
-    img {
-      max-width: 100% !important;
-    }
-
-    p,
-    h2,
-    h3 {
-      orphans: 3;
-      widows: 3;
-    }
-
-    h2,
-    h3 {
-      page-break-after: avoid;
-    }
-  }
+}
