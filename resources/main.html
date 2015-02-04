@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="css/stylesheet.min.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
-    <!-- Adobe typekit fonts -->
-    <script src="//use.typekit.net/cix1pvt.js"></script>
-    <script>try{Typekit.load();}catch(e){}</script>
-
 </head>
 <body>
 <!--[if lt IE 8]>
@@ -24,34 +20,47 @@
 
 <div id="main">
 
-    <div id="header" class="outer-layout">
+    <div id="header">
 
-        <nav id="toolbar">
-              <a href="/">home</a> | <a href="/articles">articles</a> | <a href="/about">about</a> | <a href="/contact">contact</a>
-        </nav>
-
-        <div id="icons">
-            <a href="#">&#xe286;</a>
-            <a href="#">&#xe227;</a>
-            <a href="#">&#xe252;</a>
+        <div id="header-top" class="outer-layout">
+            &nbsp;
         </div>
+        <div id="header-content" class="outer-layout">
 
-        <h1>jSolutions</h1>
-        <h2>todo: efficient software crafting</h2>
+            <nav id="toolbar">
+                  <a href="/">home</a> | <a href="/articles">articles</a> | <a href="/about">about</a> | <a href="/contact">contact</a>
+            </nav>
 
+            <div id="social-icons" class="icons">
+                <a href="#">&#xe286;</a>
+                <a href="#">&#xe227;</a>
+                <a href="#">&#xe252;</a>
+            </div>
+
+            <h1>jSolutions</h1>
+            <h2>simple efficient software solutions</h2>
+        </div>
     </div>
 
     <div id="content" class="outer-layout">
+        <!-- article title="quotes">
+            <pre class="prettyprint lang-cl">
+(deploy
+  (test
+    (code
+      (design ideas))))
+            </pre>
+        </article -->
 
         <article title="about jsolutions">
             <h3>
                 about us
             </h3>
             <p>
-                <span class="initial">jsolutions is a small independent software vendor</span> and engineering/development consultancy based in the UK. We aim to deliver simple, effective, no nonsense solutions to real world business problems.
+                jSolutions is a small independent software vendor and engineering/development consultancy based in the UK. We aim to deliver simple, effective, no nonsense solutions to real world business problems.
             </p>
             <p>
-                <span class="initial">if you choose jsolutions</span>, you can be guaranteed a pragmatic, efficient solution to your problem, with a focus on quality and reliability.
+                If you choose jsolutions, you can be guaranteed a pragmatic, efficient solution to your problem, with a focus on quality and reliability.
             </p>
             <p>
                 <a href="/about">more...</a>
@@ -68,6 +77,68 @@
             <h3>
                 test article
             </h3>
+            <p class="extract">
+                Duis autem vel eum iriure dolor in hendrerit
+                in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
+                nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+                praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+            </p>
+            <p class="icons">
+                <a href="#">&#xe224;</a>
+                <a href="#">&#xe286;</a>
+                <a href="#">&#xe227;</a>
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl
+                ut aliquip ex ea commodo consequat.
+            </p>
+            <p class="image">
+                <img src="img/testimg.jpg"/>
+                <span class="image-caption">an example image</span>
+            </p>
+            <p>Duis autem vel eum iriure dolor in hendrerit
+                in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
+                nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+                praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+            </p>
+            <h4>
+                sub title paragraph
+            </h4>
+            <p>
+                Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id
+                quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus
+                legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores
+                legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui
+                sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica,
+                quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula
+                quarta decima et quinta decima.
+            </p>
+            <p>
+                Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+            <p>Some test code:</p>
+            <pre class="prettyprint lang-cpp">
+// An example class
+//
+class MyClass : public IClass
+{
+public:
+    MyClass();
+private:
+    int _myVal;
+};</pre>
+
+            <p>Duis autem vel eum iriure dolor in hendrerit
+                in vulputate velit esse molestie consequat, vel illum dolore eu feugiat
+                nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+                praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+            </p>
+
+            <p class="icons">
+                <a href="#">&#xe224;</a>
+                <a href="#">&#xe286;</a>
+                <a href="#">&#xe227;</a>
+            </p>
         </article>
 
         <article title="software development">
@@ -107,12 +178,21 @@
 
 </div>
 
+<!-- Adobe typekit fonts -->
+
+<script src="//use.typekit.net/cix1pvt.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+
 <!-- javascript references -->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
 <script src="js/script.js"></script>
+
+<!-- code pretifier -->
+
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=default"></script>
 
 <!-- Google analytics -->
 

@@ -5,7 +5,7 @@
 @paper        : #fafafa;
 @normaltext   : #404040;
 @secondary    : #808080;
-@highlight1   : #8bd1eb;
+@highlight1    : #096e6e;
 @highlight2   : #ff4040;
 @background   : #fafafa;
 @header       : #f0f0f0;
@@ -24,6 +24,28 @@
   font-weight: normal;
   font-style: normal;
 }
+
+
+.symbol, a.symbol:before {
+  font-family: 'Mono Social Icons Font';
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+a.symbol:before {
+  content: attr(title);
+  margin-right: 0.3em;
+  font-size: 130%;
+}
+
 
 /*
  * Remove text-shadow in selection highlight:
@@ -96,7 +118,8 @@ html {
 
 h1,
 h2,
-h3 {
+h3,
+h4{
   font-weight: 300;
 }
 
@@ -109,67 +132,116 @@ hr {
   padding: 0;
 }
 
+pre {
+  font-size: 0.8em;
+}
+
+pre.prettyprint {
+  border-style: none !important;
+}
+
+body {
+
+}
+
 #main {
+  background-color: @paper;
+}
+
+.outer-layout {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
-  background-color: @paper;
-  height: 100%;
+}
+
+.icons {
+  font-family: "Mono Social Icons Font";
+
+  a {
+    text-decoration: none;
+    color: @highlight1;
+  }
+
+  a:hover {
+    color: @highlight2;
+  }
 }
 
 #header {
+  background-image: url("../img/bgbar.png");
+  background-repeat: no-repeat;
+  background-size: 100% 20px;
 
-  line-height: 0.8em;
+  background-color: @header;
+  padding-bottom: 20px;
+  margin-bottom: -20px;
+  border-bottom: 1px solid @secondary;
 
-  h1,
-  h2,
-  div,
-  nav{
-    padding-left: 20px;
-    padding-right: 20px;
-    letter-spacing: 0.05em;
+  #header-top {
+    height: 20px;
+    background-image: url("../img/pixelated.png");
+    background-position: 20px 0px;
+    background-repeat: no-repeat;
+    background-size: 920px 315px;
   }
 
-  nav,
-  #icons {
+  #header-content {
 
-    a {
-      text-decoration: none;
+
+    line-height: 0.8em;
+
+    h1,
+    h2,
+    div,
+    nav {
+      padding-left: 20px;
+      padding-right: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    nav {
+
+      a {
+        text-decoration: none;
+        color: @highlight1;
+      }
+
+      a:hover {
+        color: @highlight2;
+      }
+    }
+
+    h1 {
+      font-size: 3.2em;
+      padding-left: 18px;
+      color: @highlight2;
+    }
+
+    h2 {
+      font-size: 1.4em;
       color: @secondary;
     }
 
-    a:hover {
-      color: @highlight2;
+    nav {
+      padding-top: 5px;
+      text-align: right;
+      font-size: 1em;
+      font-weight: 300;
+      margin-bottom: -10px;
+
     }
-  }
 
-  h1 {
-    font-size: 3.2em;
-    padding-left: 18px;
-    color: @highlight2;
-  }
+    #social-icons {
+      margin-top: 40px;
+      float: right;
+      font-size: 2.2em;
+      letter-spacing: 0em;
+    }
 
-  h2 {
-    font-size: 1.4em;
-    color: @secondary;
-  }
-
-  nav {
-    padding-top: 10px;
-    text-align: right;
-  }
-
-  #icons {
-    margin-top: 40px;
-    float: right;
-    font-family: "Mono Social Icons Font";
-    font-size:  2.2em;
-    letter-spacing: 0em;
-  }
-
-  hr {
-    margin-left: 20px;
-    margin-right: 20px;
+    hr {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
   }
 
 }
@@ -183,22 +255,47 @@ hr {
 
     a {
       text-decoration: none;
-      color: @secondary;
+      color: @highlight1;
     }
 
     a:hover {
       color: @highlight2;
     }
+
+    .extract {
+      font-style: italic;
+      padding-left: 40px;
+      padding-right: 40px;
+      margin-bottom: 40px;
+    }
+
+    P.image {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    Span.image-caption {
+      text-align: center;
+      font-size: 0.9em;
+      display: block;
+    }
+
+    img {
+      width: 80%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 5px;
+    }
   }
 
   h3 {
     color: @highlight2;
-    padding-top: 40px;
+    padding-top: 20px;
   }
 
-  .initial {
-    font-variant: small-caps;
-    font-size: 1.1em;
+  .icons {
+    font-size: 1.6em;
+    letter-spacing: 0em;
   }
 }
 
@@ -230,42 +327,51 @@ hr {
   /* smartphones, iPhone, portrait 480x320 phones */
   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
 
-  #main {
+  .outer-layout {
     width: 100%;
   }
 
   #header {
-
-    background-color: @header;
-    padding-bottom: 20px;
-    margin-bottom: -20px;
-    border-bottom: 1px solid @secondary;
-
-    nav,
-    #icons,
-    h1,
-    h2{
-      float: none;
-      text-align: center;
+    #header-top {
+      height: 20px;
+      background-position: 0px 0px;
+      background-size: 960px 339px;
+      border-bottom: 1px solid @secondary;
     }
-  }
 
-  #content {
-    margin-top: 10px;
+    #header-content {
+      nav,
+      #social-icons,
+      h1,
+      h2{
+        float: none;
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 1em;
+      }
+
+      nav {
+        margin-bottom: 0px;
+      }
+    }
   }
 }
 
 @media (min-width:641px) and (max-width:960px) {
   /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-  #main {
+  .outer-layout {
     width: 100%;
   }
 
   #header {
-    background-color: @header;
-    padding-bottom: 20px;
-    margin-bottom: -20px;
-    border-bottom: 1px solid @secondary;
+    #header-top {
+      height: 20px;
+      background-position: 0px 0px;
+      background-size: 960px 339px;
+      border-bottom: 1px solid @secondary;
+    }
   }
 }
 
