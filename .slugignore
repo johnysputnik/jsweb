@@ -1,13 +1,6 @@
 README.md
-/bin
 /doc
-/build-assets
 /project.clj
-/src
 /test
 test.xml
-/target/classes
-/target/stale
-/target/temp
-/target/jsolutions-web-0.1.0.jar
 
