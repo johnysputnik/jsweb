@@ -8,11 +8,14 @@
                  [compojure "1.1.6"]
                  [com.cemerick/friend "0.2.1"]
                  [enlive "1.1.5"]
-                 [environ "0.5.0"]]
+                 [environ "0.5.0"]
+                 [org.toomuchcode/clara-rules "0.8.4"]
+                 [clj-time "0.9.0"]]
   :min-lein-version "2.0.0"
   :plugins [[lein-less "1.7.2"]
             [lein-asset-minifier "0.2.2"]
-            [environ/environ.lein "0.2.1"]]
+            [environ/environ.lein "0.2.1"]
+            [cider/cider-nrepl "0.8.2"]]
   :less {:source-paths ["src/less"]
          :target-path "target/temp/css"}
   :minify-assets {:assets {"resources/public/css/stylesheet.min.css" "target/temp/css"

@@ -9,8 +9,9 @@
 
 (defroutes app
            (GET "/" [] (templates/home {:title "jSolutions Ltd"}))
-           (GET "/articles" [] (templates/home {:title "latest articles"}))
-           (GET "/about" [] (templates/home {:title "about jSolutions"}))
-           (GET "/contact" [] (templates/home {:title "contact jSolutions"}))
+           (GET "/articles" [] (templates/articles {:title "article"}))
+           (GET "/article" [] (templates/article {:title "latest articles"}))
+           (GET "/about" [] (templates/about {:title "about jSolutions"}))
+           (GET "/contact" [] (templates/contact {:title "contact jSolutions"}))
            (route/resources "/")
            (route/not-found "not found"))

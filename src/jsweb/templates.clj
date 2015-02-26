@@ -6,6 +6,16 @@
 
 ;; html enlive templates
 
-(deftemplate home "main.html"
-             [ctxt]
-             [:head :title] (html/content (:title ctxt)))
+(defmacro defbasicpage
+  [name template]
+  `(deftemplate ~name ~template
+                [ctxt#]
+                [:head :title] (html/content (:title ctxt#))))
+
+(defbasicpage about "about.html")
+(defbasicpage contact "contact.html")
+
+
+(defbasicpage home "home.html")
+(defbasicpage articles "articles.html")
+(defbasicpage article "article.html")
