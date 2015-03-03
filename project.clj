@@ -2,6 +2,7 @@
   :description "jSolutions Ltd Web Site"
   :url "http://www.jsolutions.co.uk"
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/java.jdbc "0.3.2"]
                  [ring/ring-core "1.2.1"]
                  [ring/ring-jetty-adapter "1.2.1"]
                  [ring/ring-json "0.3.1"]
@@ -10,7 +11,8 @@
                  [enlive "1.1.5"]
                  [environ "0.5.0"]
                  [org.toomuchcode/clara-rules "0.8.4"]
-                 [clj-time "0.9.0"]]
+                 [clj-time "0.9.0"]
+                 [postgresql "9.1-901.jdbc4"]]
   :min-lein-version "2.0.0"
   :plugins [[lein-less "1.7.2"]
             [lein-asset-minifier "0.2.2"]
