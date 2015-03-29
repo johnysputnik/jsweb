@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<blog xmlns:wp="http://wordpress.org/export/1.2/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+  <post>
+    <title>interface types and data templates</title>
+    <date>2010-11-28 18:13:17</date>
+    <tag1>MVVM</tag1>
+    <tag2> </tag2>
+    <tag3>WPF</tag3>
+    <tag4> </tag4>
+    <summary>On my previous post I mentioned that there was an error in the declaration and wire up of the templates, which I inadvertantly left in the presentation. I am in the process of removing these from the presentation and will briefly explain what the problem was and what the solution could be. It is probably a reasonably common problem to encounter.
+    </summary>
+    
+    <contents><![CDATA[On my previous post I mentioned that there was an error in the declaration and wire up of the templates, which I inadvertantly left in the presentation. I am in the process of removing these from the presentation and will briefly explain what the problem was and what the solution could be. It is probably a reasonably common problem to encounter.
+
+I had declared my Content Control as follows:
+<pre class="prettyprint lang-xml">&lt;ContentControl x:Name=&quot;SelectedDirectoryView&quot;
+                Grid.Row=&quot;0&quot; Content=&quot;{Binding}&quot;
+                ContentTemplate=&quot;{StaticResource
+                          SelectedDirectoryViewTemplate}&quot;/&gt;</pre>
+And my Data Template as follows:
+<pre class="prettyprint lang-xml">&lt;DataTemplate x:Key=&quot;SelectedDirectoryViewTemplate&quot;
+              DataType=&quot;{x:Type vm:ISelectedDirectoryViewModel}&quot; &gt;
+ &lt;!-- File Picker --&gt;
+  &lt;Grid Grid.Row=&quot;0&quot;  HorizontalAlignment=&quot;Stretch&quot; Margin=&quot;0,0,0,5&quot;&gt;
+   &lt;Grid.ColumnDefinitions&gt;
+    &lt;ColumnDefinition /&gt;
+    &lt;ColumnDefinition Width=&quot;Auto&quot;/&gt;
+   &lt;/Grid.ColumnDefinitions&gt;
+   &lt;TextBox Grid.Column=&quot;0&quot; IsReadOnly=&quot;True&quot; IsEnabled=&quot;False&quot;
+            Text=&quot;{Binding DirectoryPath, Mode=OneWay}&quot;/&gt;
+   &lt;Button Grid.Column=&quot;1&quot; Margin=&quot;5,0,0,0&quot;
+           Command=&quot;{Binding OpenCommand}&quot;&gt;
+    Select Directory
+   &lt;/Button&gt;
+ &lt;/Grid&gt;
+&lt;/DataTemplate&gt;</pre>
+While this works in my example, it should not be needed to explicitly declare ContentTemplate on the ContentControl. So what was the problem and what was the solution.
+
+Removing the ContentTemplate attribute on ContentControl caused nothing to be displayed and this was a result of 2 things:
+
+1. The DataTemplate has an explicit key causing it not be applied imlicitly to the ContentControl.
+
+2. The DataTemplate declares the DataType attribute as ISelectedDirectoryViewModel, which is an interface type. Interface types cannot be used as DataTypes for DataTemplates: <a href="http://www.dev102.com/2008/04/23/wpf-datatemplate-for-interfaces-not-supported/">http://www.dev102.com/2008/04/23/wpf-datatemplate-for-interfaces-not-supported/</a> .
+
+The solution was quite simple, obviously remove the key, but then make ISelectedDirectoryViewModel an abstract class rather than an interface, and I have a template that can be applied to any type that derives from ISelectedDirectoryViewModel, which was what I was intending in the code.]]></contents>
+
+  </post>
+
+</blog>

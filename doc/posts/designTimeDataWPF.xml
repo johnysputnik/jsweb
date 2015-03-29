@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<blog xmlns:wp="http://wordpress.org/export/1.2/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+  <post>
+    <title>design time data and WPF</title>
+    <date>2010-11-30 16:24:21</date>
+    <tag1>MVVM</tag1>
+    <tag2>VS2010</tag2>
+    <tag3>WPF</tag3>
+    <tag4>Blend</tag4>
+    <summary>Following on from my MVVM presentation, I wanted to share my experience of creating Design Time Data for binding controls at design time in Blend 4 and VS2010.
+    </summary>
+    
+    <contents><![CDATA[Following on from my MVVM presentation, I wanted to share my experience of creating Design Time Data for binding controls at design time in Blend 4 and VS2010.
+
+Now I don't have Blend 4 on my new machine .... yet .... that's a hint to anyone who might be reading!
+
+So my small media application looks something a bit like this:
+
+<a href="http://1drv.ms/1Awkkr9/img/app.png"><img  title="Media PLayer App" src="http://1drv.ms/1Awkkr9/img/app.png" alt="Media Player App Screenshot" /></a>
+
+Pretty stunning eh? Well it looks even better in the Visual Studio Designer:
+
+<a href="http://1drv.ms/1Awkkr9/img/b4designdata.png"><img title="Before Design Data" src="http://1drv.ms/1Awkkr9/img/b4designdata.png" alt="VS2010 Before Design Data" /></a>
+
+Not very handy if I want to play around with some styling, which I do.
+
+Visual Studio 2010 and Blend 4 now have support for XAML sample data for use at design time, that is independent of the built product. Very handy if you want to design based on some simple code, rather than wiring up the complete View Model, just to edit styling. This can now be achieved by using the d:DesignData and d:DataContext XAML markup extensions in the expression blend schema. So here's a brief summary of what I did to achieve this.
+
+I shall start with the top element of the window, the SelectedDirectoryView. The SelectedDirectoryViewis defined as a DataTemplate:
+<pre class="prettyprint lang-xml">&lt;DataTemplate DataType=&quot;{x:Type vm:ISelectedDirectoryViewModel}&quot; &gt;
+  &lt;!-- File Picker --&gt;
+    &lt;Grid Grid.Row=&quot;0&quot;  HorizontalAlignment=&quot;Stretch&quot; Margin=&quot;0,0,0,5&quot;&gt;
+      &lt;Grid.ColumnDefinitions&gt;
+        &lt;ColumnDefinition /&gt;
+        &lt;ColumnDefinition Width=&quot;Auto&quot;/&gt;
+      &lt;/Grid.ColumnDefinitions&gt;
+      &lt;TextBox Grid.Column=&quot;0&quot; IsReadOnly=&quot;True&quot; IsEnabled=&quot;False&quot; Text=&quot;{Binding DirectoryPath, Mode=OneWay}&quot;/&gt;
+      &lt;Button Grid.Column=&quot;1&quot; Margin=&quot;5,0,0,0&quot; Command=&quot;{Binding OpenCommand}&quot;&gt;
+        Select Directory
+      &lt;/Button&gt;
+    &lt;/Grid&gt;
+&lt;/DataTemplate&gt;</pre>
+As you can see the data type it provides a template for is ISelectedDirectoryViewModel, which (despite appearances) is an abstract class rather than a base class, see my <a title="Interface types and Data Template" href="http://sputnikdev.wordpress.com/2010/11/28/interface-types-and-data-template/">last post</a> for details as to why. The next step I chose was to implement SelectedDirectoryTestViewModel:
+<pre class="prettyprint lang-xml">&lt;span style=&quot;color: #008000;&quot;&gt;class SelectedDirectoryTestViewModel : ISelectedDirectoryViewModel     {         public override string DirectoryPath         {             get;             set;         }         public override System.Windows.Input.ICommand OpenCommand         {             get             {                 return null ;             }         }     }&lt;/span&gt;</pre>
+This defines a test view model that implements the bindable properties defined by the abstract class and required by the View. I then created a test data XAML file containing the following:
+<pre class="prettyprint lang-xml">&lt;span style=&quot;color: #008000;&quot;&gt;&amp;lt;m:SelectedDirectoryTestViewModel     xmlns:m=&quot;clr-namespace:WpfMediaPlayer.ViewModels&quot;      DirectoryPath=&quot;c:directorypath&quot;&amp;gt; &amp;lt;/m:SelectedDirectoryTestViewModel&amp;gt;&lt;/span&gt;</pre>
+This could then be hooked up using the design time data tags as follows, in my MainWindow.xaml code:
+<pre class="prettyprint lang-cpp">&lt;span style=&quot;color: #008000;&quot;&gt;&amp;lt;ContentControl x:Name=&quot;SelectedDirectoryView&quot; Grid.Row=&quot;0&quot; Content=&quot;{Binding}&quot;  d:DataContext=&quot;{d:DesignData  Source=/DesignTimeData/SelectedDirectorySampleData.xaml}&quot;/&amp;gt;&lt;/span&gt;</pre>
+After doing the same for the other Views, Visual Studio now looks like this:
+
+<a href="http://1drv.ms/1Awkkr9/img/withdesigndata.png"><img title="VS2010 With Design Data" src="http://1drv.ms/1Awkkr9/img/withdesigndata.png" alt="VS2010 With Design Data" /></a>
+
+Now onward with some styling!
+
+<hr />
+
+A good starting point for more detail can be found here:
+
+<a href="http://blogs.msdn.com/b/wpfsldesigner/archive/2010/06/30/sample-data-in-the-wpf-and-silverlight-designer.aspx">http://blogs.msdn.com/b/wpfsldesigner/archive/2010/06/30/sample-data-in-the-wpf-and-silverlight-designer.aspx</a>]]></contents>
+
+  </post>
+
+</blog>

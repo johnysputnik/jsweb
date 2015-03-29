@@ -1,17 +1,25 @@
 (ns jsweb.database
   (:require [clojure.java.jdbc :as sql]
-            [clj-time [format :as timef] [coerce :as timec]]))
+            [clojure.xml :as xml]
+            [clj-time [format :as timef] [coerce :as timec]]
+            [me.raynes.fs :as fs]))
 
 (def dbspec (or (System/getenv "DATABASE_URL")
                 "postgresql://localhost:5432/jsolutions-web"))
 
-(defn migrated? []
+(defn migrated?
+  "Check if the database is correct"
+  []
   (-> (sql/query dbspec 
                  [(str "select count(*) from information_schema.tables "
                        "where table_name='blog_posts'")])
-      first :count pos?))
+      first 
+      :count 
+      pos?))
 
-(defn migrate []
+(defn createdb
+  "Create the database tables"
+  []
   (when (not (migrated?))
     (print "Creating database structure...") 
     (flush)
@@ -39,66 +47,81 @@
                         "CREATE INDEX title_ix ON blog_posts ( title )")
     (println " done")))
 
-(defn dropdb []
+(defn dropdb 
+  "Drop the database tables"
+  []
   (sql/db-do-commands dbspec
-                      "DROP TABLE IF EXISTS blog_posts"));
+                      "DROP TABLE IF EXISTS blog_posts"))
 
-(defn get-all []
+(defn get-all 
+  "Get a summary of all posts"
+  [& limit]
   (into [] (sql/query dbspec
-                      [(str "SELECT title, summary, created_at, tag1, tag2, tag3, tag4 "
+                      [(str "SELECT id, title, summary, created_at, tag1, tag2, tag3, tag4 "
                             "FROM blog_posts "
-                            "ORDER BY created_at ASC")])))
+                            "ORDER BY created_at DESC "
+                            "LIMIT " (or limit "ALL"))])))
 
-(defn get-post [title]
+(defn get-all-with-tag 
+  "Get a summary of all posts with a specific tag"
+  [tag]
+  (into [] (sql/query dbspec
+                      [(str "SELECT id, title, summary, created_at, tag1, tag2, tag3, tag4 "
+                            "FROM blog_posts "
+                            "WHERE tag1 = ? "
+                            "OR tag2 = ? "
+                            "OR tag3 = ? "
+                            "OR tag4 = ? "
+                            "ORDER BY created_at DESC ")
+                       tag tag tag tag])))
+
+(defn get-post 
+  [title]
+  "Get the details of a specific post based on title"
   (into [] (sql/query dbspec
                       [(str "SELECT * "
                             "FROM blog_posts "
                             "WHERE title = ?") 
                        title])))
 
-(defn get-all-with-tag [tag]
-  (into [] (sql/query dbspec
-                      [(str "SELECT * "
-                            "FROM blog_posts "
-                            "WHERE tag1 = ? "
-                            "OR tag2 = ? "
-                            "OR tag3 = ? "
-                            "OR tag4 = ?")
-                       tag tag tag tag])))
 
-
-(defn create-post [title summary contents created tag1 tag2 tag3 tag4]
+(defn create-post
+  "Insert a new post into the database"
+  [data]
   (sql/insert! dbspec :blog_posts
-               {:title title
-                :summary summary
-                :contents contents
+               {:title (nth data 0)
+                :summary (nth data 6)
+                :contents (nth data 7)
                 :created_at (timec/to-timestamp 
-                             (timef/parse (timef/formatter "YYYY-MM-dd HH:mm:ss") created))
-                :tag1 tag1
-                :tag2 tag2
-                :tag3 tag3 
-                :tag4 tag4}))
+                             (timef/parse (timef/formatter "YYYY-MM-dd HH:mm:ss") 
+                                          (nth data 1)))
+                :tag1 (nth data 2)
+                :tag2 (nth data 3)
+                :tag3 (nth data 4) 
+                :tag4 (nth data 5)}))
 
-(defn create-post-from-list [fields]
-  (create-post (nth fields 0) 
-               (nth fields 6)
-               (nth fields 7)
-               (nth fields 1)
-               (nth fields 2)
-               (nth fields 3)
-               (nth fields 4)
-               (nth fields 5)))
 
-(defn load-xml-posts [file-list]
-  (map #(->> (clojure.xml/parse %) :content first :content 
+(defn load-xml-posts
+  "Take a list of XML files, and for each one, parse the file
+  and extract all the tag values into a list before using that
+  list to call create-post"
+  [file-list]
+  (map #(->> (xml/parse %) 
+             :content 
+             first 
+             :content 
              (map :content)
              (map first)
-             (create-post-from-list))
+             (create-post))
        file-list))
 
-; (def blog-data (clojure.xml/parse "../simplified.xml"))
-; (pprint (-> blog-data :content first))
-; (-> (clojure.xml/parse "doc/posts/cppObjectFactory.xml") :content first :content) -> gets the post
-; (-> (clojure.xml/parse "doc/posts/cppObjectFactory.xml") :content first :content first :content) -> gets content of tag
+(defn reload-posts
+  "Recreate db and load posts from a local folder"
+  [dir]
+  (do
+    (dropdb)
+    (createdb)
+    (load-xml-posts (fs/find-files dir #".*\.xml"))))
+  
 
 
