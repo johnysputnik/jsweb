@@ -16,14 +16,27 @@
   [post]
   [:.article-title :a] (html/content (:title post))
   [:.article-title :a] (html/set-attr :href (str "/article?title=" 
-                                                 (rcodec/url-encode (:title post))))
+                                                 (rcodec/form-encode (:title post))))
   [:.article-date] (html/content  (timef/unparse bd-formatter (timec/from-date (:created_at post))))
   [:.article-tags [:a] ] (html/clone-for [tag (filter #(not (string/blank? %))
                                                (list (:tag1 post)(:tag2 post)(:tag3 post)(:tag4 post)))]
                                          [:a] (html/content tag)
                                          [:a] (html/set-attr :href (str "/articles?tag=" 
-                                                                        (rcodec/url-encode tag))))
+                                                                        (rcodec/form-encode tag))))
   [:.extract] (html/content (:summary post)))
+
+(defsnippet full-post-snippet "article.html" 
+  {[:.article-title] [[:#icons-bottom]]}
+  [post]
+  [:.article-title] (html/content (:title post))
+  [:.article-date] (html/content  (timef/unparse bd-formatter (timec/from-date (:created_at post))))
+  [:.article-tags [:a] ] (html/clone-for [tag (filter #(not (string/blank? %))
+                                               (list (:tag1 post)(:tag2 post)(:tag3 post)(:tag4 post)))]
+                                         [:a] (html/content tag)
+                                         [:a] (html/set-attr :href (str "/articles?tag=" 
+                                                                        (rcodec/form-encode tag))))
+  [:.extract] (html/content (:summary post))
+  [:.article-content] (html/html-content (:contents post)))
 
 ;; html enlive templates
 
@@ -37,11 +50,15 @@
 (defbasicpage about "about.html")
 (defbasicpage contact "contact.html")
 
-;; (defbasicpage home "home.html")
 (deftemplate home "home.html"
   [ctxt#]
   [:#latest-articles-list] (html/content (map abbrev-post-snippet (:data ctxt#))))
 
-(defbasicpage articles "articles.html")
+(deftemplate articles "articles.html"
+  [ctxt#]
+  [:#latest-articles-list] (html/content (map abbrev-post-snippet (:data ctxt#))))
 
-(defbasicpage article "article.html")
+(deftemplate article "article.html"
+  [ctxt#]
+  [:#article-detail] (html/content (map full-post-snippet (:data ctxt#)))
+  [:#article-detail] (html/set-attr :title (:title (first (:data ctxt#)))))

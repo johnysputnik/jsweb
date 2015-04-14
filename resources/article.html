@@ -43,8 +43,8 @@
     </div>
 
     <div id="content" class="outer-layout">
-        <article title="test article">
-            <h3>
+        <article id="article-detail" title="test article">
+            <h3 class="article-title">
                 a test article
             </h3>
             <p class="article-date">
@@ -52,7 +52,6 @@
             </p>
             <p class="article-tags">
                 <a href="/articles">test</a>
-                <a href="/articles">coding</a>
             </p>
             <p class="extract">
                 Duis autem vel eum iriure dolor in hendrerit
@@ -60,11 +59,12 @@
                 nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
                 praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
             </p>
-            <p class="icons">
+            <p class="icons" id="icons-top">
                 <a href="#">&#xe224;</a>
                 <a href="#">&#xe286;</a>
                 <a href="#">&#xe227;</a>
             </p>
+           <div class="article-content">
             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
                 euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
                 ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl
@@ -110,8 +110,9 @@ private:
                 nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
                 praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
             </p>
+            </div>
 
-            <p class="icons">
+            <p class="icons" id="icons-bottom">
                 <a href="#">&#xe224;</a>
                 <a href="#">&#xe286;</a>
                 <a href="#">&#xe227;</a>
