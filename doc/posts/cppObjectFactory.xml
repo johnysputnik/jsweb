@@ -273,14 +273,14 @@ We can now build and run the project and get the following output:
 I am class two</pre>
 <h2>References:</h2>
 Factory (software concept) - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Factory_(software_concept)">http://http://en.wikipedia.org/wiki/Factory_(software_concept)</a>
-
+<br/>
 Factory Method Pattern - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Factory_method_pattern">http://http://en.wikipedia.org/wiki/Factory_method_pattern</a>
-
+<br/>
 Abstract Factory Pattern - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Abstract_factory_pattern">http://http://en.wikipedia.org/wiki/Abstract_factory_pattern</a>
-
+<br/>
 C++ 11 - Wikipedia: <a href="http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)">http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)</a>
-
-<a href="http://1drv.ms/1Awkkr9/src/cppObjectFactory.zip">Source Code</a>]]></contents>
+<br/>
+<a href="/data/src/cppObjectFactory.zip">Source Code</a>]]></contents>
 
   </post>
 

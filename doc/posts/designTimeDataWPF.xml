@@ -17,11 +17,11 @@ Now I don't have Blend 4 on my new machine .... yet .... that's a hint to anyone
 
 So my small media application looks something a bit like this:
 
-<a href="http://1drv.ms/1Awkkr9/img/app.png"><img  title="Media PLayer App" src="http://1drv.ms/1Awkkr9/img/app.png" alt="Media Player App Screenshot" /></a>
+<a href="/data/img/app.png"><img  title="Media PLayer App" src="/data/img/app.png" alt="Media Player App Screenshot" /></a>
 
 Pretty stunning eh? Well it looks even better in the Visual Studio Designer:
 
-<a href="http://1drv.ms/1Awkkr9/img/b4designdata.png"><img title="Before Design Data" src="http://1drv.ms/1Awkkr9/img/b4designdata.png" alt="VS2010 Before Design Data" /></a>
+<a href="/data/img/b4designdata.png"><img title="Before Design Data" src="/data/img/b4designdata.png" alt="VS2010 Before Design Data" /></a>
 
 Not very handy if I want to play around with some styling, which I do.
 
