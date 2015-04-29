@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>You are not a gadget - what is a person?</title>
+        <date>2015-04-29 15:43:46</date>
+        <tag1>AI</tag1>
+        <tag2>ethics</tag2>
+        <tag3>books</tag3>
+        <tag4></tag4>
+        <summary>
+            Jason Lanier's book describes how recent developments in our culture
+            and it's use of social networks, cloud computing and the internet are
+            eroding our sense of person and supressing individual expression.
+        </summary>
+
+        <contents><![CDATA[
+        <p>Jason Lanier is a philosopher and computer scientist connected with UC
+        Berkeley. His book <a href="http://www.penguin.co.uk/books/you-are-not-a-gadget/9780141049113/">You are not a gadget</a>
+        is part apocalyptic vision and part a call to arms. In
+        the first chapter he talks about how our sense of person and of what it
+        means to be human is gradually being eroded. Here are some quotes that
+        particularly stood out for me. (some are partially edited - I hope he doesn't
+        mind)</p>
+
+        <p><em>"The turing test cuts both ways. You can't tell if a machine has got smarter
+        or if you've just lowered your own standards of intelligence to such a degree
+        that the machine seems smart... People degrade themselves in order to make machines
+        seem smart all the time... We ask teachers to teach to standardized tests so a student
+        will look good to an algorithm. We have repeatedly demonstrated our species' bottomless
+        ability to lower our standards to make information technology look good."</em></p>
+
+        <p><em>"What computerized analysis of the country's school tests has done
+        to education is exactly what Facebook has done to friendships. In both cases,
+        life is turned into a database. Both degradations are based on the same
+        philosophical mistake, which is a belief that computers can represent human thought
+        or human relationships. These are things that computers cannot currently do."</em></p>
+
+        <p><em>"Something like missionary reductionism has happened to the internet with
+        the rise of web 2.0. Individual web pages as they first appeared in the early 1990s
+        had the flavor of personhood. MySpace preserved some of that flavor, though a process
+        of regularized formatting had begun. Facebook went further, organizing people into
+        multiple-choice identities, while Wikipedia seeks to erase point of view entirely.
+        If a church or government were doing these things, it would feel authoritarian...
+        People will accept ideas presented in technological form that would be abhorrent in
+        any other form."</em></p>
+
+        ]]></contents>
+
+    </post>
+
+</blog>
