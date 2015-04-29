@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>basic matrix operations</title>
+        <date>2015-04-30 09:43:46</date>
+        <tag1>maths</tag1>
+        <tag2>machine learning</tag2>
+        <tag3></tag3>
+        <tag4></tag4>
+        <summary>
+            Basic matrix operations are useful for implementing machine learning algorithms.
+            These notes provide descriptions of basic operations on matrices.
+        </summary>
+
+        <contents><![CDATA[
+        <p>The original coursera machine learning course can be found
+        <a href="https://www.coursera.org/learn/machine-learning" target="_blank">here</a></p>
+
+        <p>Matrix addtion and subtraction are piecewise:</p>
+
+        <img src="/data/img/matrix-addition.png"/>
+
+        <p>Matrix scalar multiplication - multiply every element by the scalar value:</p>
+
+        <img src="/data/img/matrix-scalar-mult.png"/>
+
+        <p>Matrix vector multiplication:</p>
+
+        <img src="/data/img/matrix-vector-mult.png"/>
+
+        <p>Matrix matrix multiplication:</p>
+
+        <img src="/data/img/matrix-matrix-mult.png"/>
+
+        <p>Matix multiplication is non-commutative, but is associative:</p>
+
+        <img src="/data/img/matrix-mult-properties.png"/>
+
+        <p>The identity and inverse of a matrix:</p>
+
+        <img src="/data/img/matrix-inverse.png"/>
+
+        <p>Matrix transposition:</p>
+
+        <img src="/data/img/matrix-transposition.png"/>
+
+        ]]></contents>
+
+    </post>
+
+</blog>
