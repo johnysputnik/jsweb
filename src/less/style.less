@@ -306,18 +306,21 @@ body {
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .article-tags {
       a {
         display: inline-block;
         padding: 1px;
+        padding-right: 5px;
+        padding-left: 5px;
         border: 1px solid @secondary;
         border-radius: 3px;
         margin-right: 6px;
         font-size: 0.7em;
-        min-width: 50px;
+        /*min-width: 40px;*/
         text-align: center;
         margin-top: 10px;
         margin-bottom: -10px;
@@ -443,6 +446,11 @@ body {
 }
 
 @media print {
+
+  html {
+    font-size: 9pt;
+  }
+
   *,
   *:before,
   *:after {
@@ -456,10 +464,6 @@ body {
   a,
   a:visited {
     text-decoration: underline;
-  }
-
-  a[href]:after {
-    content: " (" attr(href) ")";
   }
 
   abbr[title]:after {
@@ -512,8 +516,16 @@ body {
     page-break-after: avoid;
   }
 
-  #icons {
-    visibility: hidden;
+  .icons,
+  #header,
+  .article-tags,
+  #footer {
+    display: none;
   }
+
+  .article-date {
+    padding-top: 2mm;
+  }
+
 }
 

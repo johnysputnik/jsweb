@@ -35,6 +35,12 @@
                                          [:a] (html/content tag)
                                          [:a] (html/set-attr :href (str "/articles?tag=" 
                                                                         (rcodec/form-encode tag))))
+            [:.post-to-twitter] (html/set-attr :href (str "http://twitter.com/home/?status="
+                                                          (:title post)
+                                                          ". via @jsolutionsuk"))
+            [:.post-to-facebook] (html/set-attr :href (str "http://www.facebook.com/share.php?u="
+                                                           "http://www.jsolutions.co.uk/article?title="
+                                                           (rcodec/form-encode (:title post))))
   [:.extract] (html/content (:summary post))
   [:.article-content] (html/html-content (:contents post)))
 

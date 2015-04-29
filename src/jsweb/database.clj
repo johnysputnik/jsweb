@@ -121,7 +121,7 @@
   (do
     (dropdb)
     (createdb)
-    (load-xml-posts (fs/find-files dir #".*\.xml"))))
+    (load-xml-posts (fs/find-files dir #"post_.*\.xml"))))
   
 
 
