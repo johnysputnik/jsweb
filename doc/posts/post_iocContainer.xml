@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<blog xmlns:wp="http://wordpress.org/export/1.2/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+
+  <post>
+    <title>an IOC container using variadic templates</title>
+    <date>2013-03-26 15:29:21</date>
+<tag1>C++11</tag1>
+    <tag2>VS2012</tag2>
+    <tag3/>
+    <tag4/>
+    <summary>
+      Whilst developing some projects in C++, I have on occasion slipped
+      into the sloppy practice of using a Service Locator badly and it got
+      me thinking about implementing an IOC container for dependency
+      injection in C++, using Variadic Templates, not only as a means to
+      solving a problem I had, but also as a way of looking into Variadic
+      Templates under VS2012.
+    </summary>
+    <contents><![CDATA[As you will see from some of my previous posts, along with developing in C++, I have also had a fair amount of experience of WPF and C#. Whilst working with these technologies, I have generally employed a Dependency Injection model rather than a Service Locator pattern, as I believe this tends to make dependencies more explicit. Whilst the same can be achieved with a Service Locator patterm, often it is an excuse for a global property bag that can be called upon in any part of the code, this almost always leads to dependencies being hidden. Whilst developing some projects in C++, I have on occasion slipped into the sloppy practice of using a Service Locator badly and it got me thinking about implementing an IOC container for dependency injection in C++, using Variadic Templates, not only as a means to solving a problem I had, but also as a way of looking into Variadic Templates under VS2012. These features of C++ 11 are only available in the <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=35515">November 2012 CTP VC++ download</a>.
+<h2>Service Locator and Dependency Injection</h2>
+There has been so much written comparing the two, even to the point of declaring a Service Locator an anti-pattern, which I believe is a little harsh. As such, I am not going to write too much about it here, but point you to a few articles:
+
+<a href="http://martinfowler.com/articles/injection.html">Inversion of Control Container and Dependency Injection, Martin Fowler</a>
+
+<a href="http://msdn.microsoft.com/en-us/library/ff648968.aspx">The Service Locator Pattern, MSDN</a>
+
+<a href="http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/">Service Locator is an Anti Pattern, Mark Seemann</a>
+
+<a href="http://blog.gauffin.org/2012/09/service-locator-is-not-an-anti-pattern/#.UUNcQ1flLO0">Service Locator is not an Anti Pattern, J Gauffin</a>
+
+Make of them what you will :)
+<h2>Variadic Templates in C++ 11</h2>
+Anyone working in C or C++ will be aware of variadic functions; functions that can take a varargs, such as printf:
+<pre class="prettyprint lang-cpp">int printf ( const char * format, ... );</pre>
+The C++ 11 standard extends this concept to templates, allowing templates to have a variable number of template parameters:
+<pre class="prettyprint lang-cpp">template &lt;typename... Ts&gt;
+int safe_printf(const char* f, const Ts&amp;... ts);</pre>
+A good introduction to them, by Andrei Alexandrescu can be found here:
+
+<a href="http://channel9.msdn.com/Events/GoingNative/GoingNative-2012/Variadic-Templates-are-Funadic">Variadic Templates are Funadic (Going Native 2012), Andreio Alexandrescu.</a>
+
+As we shall see, as I develop my idea for an IOC Container for Dependency Injection, variadic templates, along with lambda functions, are the ideal mechanism to implement what I am after.
+<h2>My Dependency Problem</h2>
+This example is a simplified example, but imagine I have a dependency graph a great deal bigger than the one I'm describing, also imagine that these classes are written a little better!. I have four classes as follows:
+<pre class="prettyprint lang-cpp">class One
+{
+public:
+    One(){}
+    virtual ~One(){}
+    std::string getOutput() const {  return message_;  }
+    std::string message_;
+};</pre>
+<pre class="prettyprint lang-cpp">class Two
+{
+public:
+    Two(){}
+    virtual ~Two(){}
+    std::string getOutput() const {  return message_;  }
+    std::string message_;
+};</pre>
+<pre class="prettyprint lang-cpp">class Three
+{
+public:
+    Three(){}
+    virtual ~Three(){}
+    std::string getOutput() const {  return &quot;IOC Created&quot;;  }
+};</pre>
+<pre class="prettyprint lang-cpp">class DependentClass
+{
+public:
+    DependentClass(OnePtr one, TwoPtr two, ThreePtr three) 
+      : one_(one), two_(two), three_(three){}
+    void output() const 
+    { 
+        std::cout &lt;&lt; &quot;done it&quot; &lt;&lt; std::endl; 
+        std::cout &lt;&lt; &quot;one - &quot; &lt;&lt; one_-&gt;getOutput() &lt;&lt; std::endl; 
+        std::cout &lt;&lt; &quot;two - &quot; &lt;&lt; two_-&gt;getOutput() &lt;&lt; std::endl; 
+        std::cout &lt;&lt; &quot;three - &quot; &lt;&lt; three_-&gt;getOutput() &lt;&lt; std::endl; 
+
+    }
+private:
+    DependentClass(){}
+    OnePtr one_;
+    TwoPtr two_;
+    ThreePtr three_;
+};</pre>
+It is quite clear from the code above that DependentClass is dependent on the other three classes.  In my scenario, I want the One class to be a singleton, I want the Two class to be declared outside any kind of factory method and the Three and DependentClass to be managed inside the IOC container. What does this mean in terms of code? Well imagine the code being something like this (well, actually exactly like this):
+<pre class="prettyprint lang-cpp">IOCContainer container;
+
+container.RegisterSingletonClass&lt;One&gt;();
+OnePtr one = container.GetInstance&lt;One&gt;();
+one-&gt;message_ = &quot;Singleton&quot;;
+
+TwoPtr two(new Two());
+two-&gt;message_ = &quot;Registered Instance&quot;;
+container.RegisterInstance&lt;Two&gt;(two);
+
+container.RegisterClass&lt;Three&gt;();
+container.RegisterClass&lt;DependentClass, One, Two, Three&gt;();
+
+DependentClassPtr instance = container.GetInstance&lt;DependentClass&gt;();
+
+instance-&gt;output();</pre>
+I want to register a singleton instance of One against my IOC container, with the assurance that if an instance of One is used, it is always the same one.  I also want to register an instance of Two that will also be used when needed. In reality this functionality ends up being very similar, although it does have a slight semantic difference.
+
+I then want to register a Three with no dependencies and DependentClass with the three dependencies that is does have.
+
+You will also notice I am using Ptr classes here. These are just typedefs for smart pointers to the various classes:
+<pre class="prettyprint lang-cpp">typedef std::shared_ptr&lt;One&gt; OnePtr;
+typedef std::shared_ptr&lt;Two&gt; TwoPtr;
+typedef std::shared_ptr&lt;Three&gt; ThreePtr;
+typedef std::shared_ptr&lt;DependentClass&gt; DependentClassPtr;</pre>
+<h2>An IOC Container with Variadic Templates in C++</h2>
+So now I have outlined what I am trying to achieve, lets have a look at the implementation of the IOCContainer.
+
+&nbsp;
+<pre class="prettyprint lang-cpp">class IOCContainer
+{
+private:
+    class IHolder
+    {
+    public:
+        virtual ~IHolder(){}
+        virtual void noop(){}
+    };
+
+    template&lt;class T&gt;
+    class Holder : public IHolder
+    {
+    public:
+        virtual ~Holder(){}
+        std::shared_ptr&lt;T&gt; instance_;
+    };
+
+    std::map&lt;std::string, std::function&lt;void*()&gt;&gt; creatorMap_;
+    std::map&lt;std::string, std::shared_ptr&lt;IHolder&gt;&gt; instanceMap_;
+
+public:
+
+    template &lt;class T, typename... Ts&gt;
+    void RegisterSingletonClass()
+    {
+        std::shared_ptr&lt;Holder&lt;T&gt;&gt; holder(new Holder&lt;T&gt;());
+        holder-&gt;instance_ = std::shared_ptr&lt;T&gt;(new T(GetInstance&lt;Ts&gt;()...));
+
+        instanceMap_[typeid(T).name()] = holder;
+    }
+
+    template &lt;class T&gt;
+    void RegisterInstance(std::shared_ptr&lt;T&gt; instance)
+    {
+        std::shared_ptr&lt;Holder&lt;T&gt;&gt; holder(new Holder&lt;T&gt;());
+        holder-&gt;instance_ = instance;
+
+        instanceMap_[typeid(T).name()] = holder;
+    }
+
+    template &lt;class T, typename... Ts&gt;
+    void RegisterClass()
+    {
+        auto createType = [this]() -&gt; T * {
+            return new T(GetInstance&lt;Ts&gt;()...);
+        };
+
+        creatorMap_[typeid(T).name()] = createType;
+    }
+
+    template &lt;class T&gt;
+    std::shared_ptr&lt;T&gt; GetInstance()
+    {
+        if(instanceMap_.find(typeid(T).name()) != instanceMap_.end())
+        {
+            std::shared_ptr&lt;IHolder&gt; iholder = instanceMap_[typeid(T).name()];
+
+            Holder&lt;T&gt; * holder = dynamic_cast&lt;Holder&lt;T&gt;*&gt;(iholder.get());
+            return holder-&gt;instance_;
+        }
+        else
+        {
+            return std::shared_ptr&lt;T&gt;(static_cast&lt;T*&gt;
+                                       (creatorMap_[typeid(T).name()]()));
+        }
+    }
+
+};</pre>
+Lets go through what is an initial solution to this problem. I won't pretend this is the most robust solution, but hopefully it will give you some idea of where to start, but also give a brief introduction to some features of C++ 11.
+
+Firstly, I need a couple of collections to represent the registry, a collection of registered instances and singletons and a collection of creator functions:
+<pre class="brush: cpp; gutter: true">std::map&lt;std::string, std::function&lt;void*()&gt;&gt; creatorMap_;
+std::map&lt;std::string, std::shared_ptr&lt;IHolder&gt;&gt; instanceMap_;</pre>
+These two collections use a couple of features that are part of the new C++ 11 standard: function objects and shared pointers. I won't go into detail here as good references can be found elsewhere:
+
+<a href="http://en.wikipedia.org/wiki/C%2B%2B11#Polymorphic_wrappers_for_function_objects">Polymorphic Wrappers for Function Objects</a>.
+
+<a href="http://en.wikipedia.org/wiki/Smart_pointer#C.2B.2B_smart_pointers">C++ Smart Pointers</a>.
+
+You will also notice a Holder interface and template class:
+<pre class="prettyprint lang-cpp">class IHolder
+{
+public:
+    virtual ~IHolder(){}
+    virtual void noop(){}
+};
+
+template&lt;class T&gt;
+class Holder : public IHolder
+{
+public:
+    virtual ~Holder(){}
+    std::shared_ptr&lt;T&gt; instance_;
+};</pre>
+I want the classes that are registered with the IOC Container to be independent of a specific interface, but unfortunately std library container require the contained class to be the same type. By providing an interface with a no-op method (can't remember why this was neccesary?) and a template class that implements that interface I can provide a useful wrapper for an instance of a class that can be held in a container, such that the class contained can really be anything.
+
+You will also notice that the registered creator functions return a void pointer. I am not completely happy about this, it requires some internal casting that might not be the best C++ code, but solves the problem for me. Suggestions for better ways of doing this are very welcome :)
+
+So we now have the basic internal types and collections to represent the data contained in the registry, lets have a look at some of the methods on the IOC container.
+
+Firstly the simplest method, for registering existing instances of a class:
+<pre class="prettyprint lang-cpp">template &lt;class T&gt;
+void RegisterInstance(std::shared_ptr&lt;T&gt; instance)
+{
+    std::shared_ptr&lt;Holder&lt;T&gt;&gt; holder(new Holder&lt;T&gt;());
+    holder-&gt;instance_ = instance;
+
+    instanceMap_[typeid(T).name()] = holder;
+}</pre>
+This does nothing new to C++ 11. It simply creates a new shared pointer to the shared pointer instance (mmm!) and adds it to the registry using the name from the typeid as the key. This could easily be extended to allow for multiple named registrations as well.
+
+Now lets have a look at the RegisterClass method, which uses a lot of C++ 11 features:
+<pre class="prettyprint lang-cpp">template &lt;class T, typename... Ts&gt;
+void RegisterClass()
+{
+    auto createType = [this]() -&gt; T * {
+        return new T(GetInstance&lt;Ts&gt;()...);
+    };
+
+    creatorMap_[typeid(T).name()] = createType;
+}</pre>
+Firstly we have a <a href="http://en.wikipedia.org/wiki/Variadic_templates">Variadic Template</a> method that can take a variable number of template parameters. This allows classes to be registered with dependencies on 0 or more other types. Our creator functions are then declared as a <a href="http://en.wikipedia.org/wiki/Anonymous_function#C.2B.2B">lambda function</a> createType, with an<a href="http://en.wikipedia.org/wiki/C%2B%2B11#Type_inference"> inferred type</a> using the auto keyword. The creator method expands the template parameters using the GetInstance&lt;&gt;() method to create a new instance of T.
+
+The RegisterSingleton method is similar:
+<pre class="prettyprint lang-cpp">template &lt;class T, typename... Ts&gt;
+void RegisterSingletonClass()
+{
+    std::shared_ptr&lt;Holder&lt;T&gt;&gt; holder(new Holder&lt;T&gt;());
+    holder-&gt;instance_ = std::shared_ptr&lt;T&gt;(new T(GetInstance&lt;Ts&gt;()...));
+
+    instanceMap_[typeid(T).name()] = holder;
+}</pre>
+Although rather than adding a creator function, we just create an instance directly and add it to the registry of instances.
+
+All that leaves now is the GetInstance method:
+<pre class="prettyprint lang-cpp">template &lt;class T&gt;
+std::shared_ptr&lt;T&gt; GetInstance()
+{
+    if(instanceMap_.find(typeid(T).name()) != instanceMap_.end())
+    {
+        std::shared_ptr&lt;IHolder&gt; iholder = instanceMap_[typeid(T).name()];
+
+        Holder&lt;T&gt; * holder = dynamic_cast&lt;Holder&lt;T&gt;*&gt;(iholder.get());
+        return holder-&gt;instance_;
+    }
+    else
+    {
+        return std::shared_ptr&lt;T&gt;(static_cast&lt;T*&gt;(creatorMap_[typeid(T).name()]()));
+    }
+}</pre>
+First we check to see if we have an instance registered and return that instance. We have to do a fairly safe C++ cast here to cast the holder to the right type. If there is no registered instance then we create one using the creator registered for that type and use a slightly more hairy cast to get a pointer to the correct type to return.
+<h2>Summary</h2>
+Whils this solution has some flaws, particularly in error checking, hopefully it can be seen how new features of C++ 11 can be used to provide a reasonably elegant solution to the problem of Dependency Injection using an IOC Container.
+
+<a href="/data/src/iocContainer.zip">source code</a>]]></contents>
+
+  </post>
+</blog>

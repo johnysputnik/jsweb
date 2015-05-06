@@ -33,7 +33,7 @@
 
         <img src="/data/img/matrix-matrix-mult.png"/>
 
-        <p>Matix multiplication is non-commutative, but is associative:</p>
+        <p>Matrix multiplication is non-commutative, but is associative:</p>
 
         <img src="/data/img/matrix-mult-properties.png"/>
 
