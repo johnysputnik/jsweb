@@ -273,16 +273,16 @@ We can now build and run the project and get the following output:
 I am class two</pre>
 <h2>References:</h2>
 <p>
-Factory (software concept) - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Factory_(software_concept)">http://http://en.wikipedia.org/wiki/Factory_(software_concept)</a>
+Factory (software concept) - Wikipedia: <a target="_blank" href="http://http://en.wikipedia.org/wiki/Factory_(software_concept)">http://http://en.wikipedia.org/wiki/Factory_(software_concept)</a>
 </p>
 <p>
-Factory Method Pattern - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Factory_method_pattern">http://http://en.wikipedia.org/wiki/Factory_method_pattern</a>
+Factory Method Pattern - Wikipedia: <a target="_blank" href="http://http://en.wikipedia.org/wiki/Factory_method_pattern">http://http://en.wikipedia.org/wiki/Factory_method_pattern</a>
 </p>
 <p>
-Abstract Factory Pattern - Wikipedia: <a href="http://http://en.wikipedia.org/wiki/Abstract_factory_pattern">http://http://en.wikipedia.org/wiki/Abstract_factory_pattern</a>
+Abstract Factory Pattern - Wikipedia: <a target="_blank" href="http://http://en.wikipedia.org/wiki/Abstract_factory_pattern">http://http://en.wikipedia.org/wiki/Abstract_factory_pattern</a>
 </p>
 <p>
-C++ 11 - Wikipedia: <a href="http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)">http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)</a>
+C++ 11 - Wikipedia: <a target="_blank" href="http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)">http://en.wikipedia.org/wiki/C%2B%2B11#Lambda_functions_and_expressions)</a>
 </p>
 <p>
 <a href="/data/src/cppObjectFactory.zip">Source Code</a>
