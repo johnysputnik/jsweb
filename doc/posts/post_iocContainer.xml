@@ -19,15 +19,15 @@
     <contents><![CDATA[As you will see from some of my previous posts, along with developing in C++, I have also had a fair amount of experience of WPF and C#. Whilst working with these technologies, I have generally employed a Dependency Injection model rather than a Service Locator pattern, as I believe this tends to make dependencies more explicit. Whilst the same can be achieved with a Service Locator patterm, often it is an excuse for a global property bag that can be called upon in any part of the code, this almost always leads to dependencies being hidden. Whilst developing some projects in C++, I have on occasion slipped into the sloppy practice of using a Service Locator badly and it got me thinking about implementing an IOC container for dependency injection in C++, using Variadic Templates, not only as a means to solving a problem I had, but also as a way of looking into Variadic Templates under VS2012. These features of C++ 11 are only available in the <a href="http://www.microsoft.com/en-gb/download/details.aspx?id=35515">November 2012 CTP VC++ download</a>.
 <h2>Service Locator and Dependency Injection</h2>
 There has been so much written comparing the two, even to the point of declaring a Service Locator an anti-pattern, which I believe is a little harsh. As such, I am not going to write too much about it here, but point you to a few articles:
-
+     <p>
 <a href="http://martinfowler.com/articles/injection.html">Inversion of Control Container and Dependency Injection, Martin Fowler</a>
-
+        </p><p>
 <a href="http://msdn.microsoft.com/en-us/library/ff648968.aspx">The Service Locator Pattern, MSDN</a>
-
+               </p><p>
 <a href="http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/">Service Locator is an Anti Pattern, Mark Seemann</a>
-
+                      </p><p>
 <a href="http://blog.gauffin.org/2012/09/service-locator-is-not-an-anti-pattern/#.UUNcQ1flLO0">Service Locator is not an Anti Pattern, J Gauffin</a>
-
+                             </p>
 Make of them what you will :)
 <h2>Variadic Templates in C++ 11</h2>
 Anyone working in C or C++ will be aware of variadic functions; functions that can take a varargs, such as printf:
@@ -36,9 +36,9 @@ The C++ 11 standard extends this concept to templates, allowing templates to hav
 <pre class="prettyprint lang-cpp">template &lt;typename... Ts&gt;
 int safe_printf(const char* f, const Ts&amp;... ts);</pre>
 A good introduction to them, by Andrei Alexandrescu can be found here:
-
+                    <p>
 <a href="http://channel9.msdn.com/Events/GoingNative/GoingNative-2012/Variadic-Templates-are-Funadic">Variadic Templates are Funadic (Going Native 2012), Andreio Alexandrescu.</a>
-
+                       </p>
 As we shall see, as I develop my idea for an IOC Container for Dependency Injection, variadic templates, along with lambda functions, are the ideal mechanism to implement what I am after.
 <h2>My Dependency Problem</h2>
 This example is a simplified example, but imagine I have a dependency graph a great deal bigger than the one I'm describing, also imagine that these classes are written a little better!. I have four classes as follows:
@@ -189,11 +189,11 @@ Firstly, I need a couple of collections to represent the registry, a collection 
 <pre class="brush: cpp; gutter: true">std::map&lt;std::string, std::function&lt;void*()&gt;&gt; creatorMap_;
 std::map&lt;std::string, std::shared_ptr&lt;IHolder&gt;&gt; instanceMap_;</pre>
 These two collections use a couple of features that are part of the new C++ 11 standard: function objects and shared pointers. I won't go into detail here as good references can be found elsewhere:
-
+     <p>
 <a href="http://en.wikipedia.org/wiki/C%2B%2B11#Polymorphic_wrappers_for_function_objects">Polymorphic Wrappers for Function Objects</a>.
-
+        </p><p>
 <a href="http://en.wikipedia.org/wiki/Smart_pointer#C.2B.2B_smart_pointers">C++ Smart Pointers</a>.
-
+               </p>
 You will also notice a Holder interface and template class:
 <pre class="prettyprint lang-cpp">class IHolder
 {
@@ -268,8 +268,8 @@ std::shared_ptr&lt;T&gt; GetInstance()
 First we check to see if we have an instance registered and return that instance. We have to do a fairly safe C++ cast here to cast the holder to the right type. If there is no registered instance then we create one using the creator registered for that type and use a slightly more hairy cast to get a pointer to the correct type to return.
 <h2>Summary</h2>
 Whils this solution has some flaws, particularly in error checking, hopefully it can be seen how new features of C++ 11 can be used to provide a reasonably elegant solution to the problem of Dependency Injection using an IOC Container.
-
-<a href="/data/src/iocContainer.zip">source code</a>]]></contents>
+  <p>
+<a href="/data/src/iocContainer.zip">source code</a></p>]]></contents>
 
   </post>
 </blog>
