@@ -33,7 +33,7 @@ or in java:
 However, C++ does not allow us to do such things; we have to come up with another solution.
 The basic pattern, or set of patterns, that help us achieve this are factory patterns.
 <h2>A Simple Solution</h2>
-<h3>The Base Class</h3>
+<h4>The Base Class</h4>
 Our base class is defined as an abstract class as follows:
 <pre class="prettyprint lang-cpp">#ifndef CPPFACTORY_MYBASECLASS_H
 #define CPPFACTORY_MYBASECLASS_H
@@ -46,7 +46,7 @@ public:
 };
 
 #endif // CPPFACTORY_MYBASECLASS_H</pre>
-<h3>The Factory Class</h3>
+<h4>The Factory Class</h4>
 A factory method can then be defined as a static method that can be used to create
 instances of MyBaseClass. We could define this as a static method on MyBaseClass
 itself, although it is generally good practice in object oriented development that a class
@@ -73,7 +73,7 @@ from MyBaseClass and return it as a shared pointer, as it will relinquish owners
 of the object to the caller.
 
 We shall return to the implementation of the method shortly.
-<h3>Some Derived Classes</h3>
+<h4>Some Derived Classes</h4>
 So lets implement a couple of derived classes:
 <pre class="prettyprint lang-cpp">#ifndef CPPFACTORY_DERIVEDCLASSONE_H
 #define CPPFACTORY_DERIVEDCLASSONE_H
@@ -110,7 +110,7 @@ public:
 };
 
 #endif // CPPFACTORY_DERIVEDCLASSTWO_H</pre>
-<h3>A First Attempt at the Factory Method</h3>
+<h4>A First Attempt at the Factory Method</h4>
 A simple solution to the implementation of the factory method would be something like
 this:
 <pre class="prettyprint lang-cpp">#include &quot;MyFactorySimple.h&quot;
@@ -135,7 +135,7 @@ shared_ptr&lt;MyBaseClass&gt; MyFactory::CreateInstance(string name)
 }</pre>
 The factory determines which concrete class to create and has knowledge of every class
 via the class headers.
-<h3>Running the application</h3>
+<h4>Running the application</h4>
 A simple main function is now needed so that we can test our implementation:
 <pre class="prettyprint lang-cpp">#include &quot;MyFactorySimple.h&quot;
 
@@ -162,7 +162,7 @@ The problem now is that the factory has an explicit dependency on all the derive
 classes, which is not ideal. We need to come up with a better solution; one that removes
 the need for constantly adding to the MyFactory::Create. This is where the idea of a
 registry of factory methods can help us.
-<h3>A Revised Factory Class</h3>
+<h4>A Revised Factory Class</h4>
 One of our main objectives is to remove the dependencies on the derived classes from
 the factory. However, we still need to allow the factory to trigger the creation of instances.
 One way to do this is for the main factory class to maintain a registry of factory
@@ -239,8 +239,8 @@ define as follows:
 This uses the new C++ lambda support to declare anonymous functions. We then
 only need add the following to each derived class source file:
 <pre class="prettyprint lang-cpp">REGISTER_CLASS(&quot;one&quot;, DerivedClassOne);</pre>
-<span style="color: #ff0000;">Update 25th January 2013</span>
-<h3>We Can Do Better ...</h3>
+<span>Update 25th January 2013</span>
+<h4>We Can Do Better ...</h4>
 Although the #define solution provides a neat implementation we could probably do this in a bit more of a C++ style by converting the Registrar class into a template class as follows:
 <pre class="prettyprint lang-cpp">template&lt;class T&gt;
 class Registrar {
