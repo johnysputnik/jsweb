@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>linear regression with multiple variables</title>
+        <date>2015-05-06 18:32:46</date>
+        <tag1>AI</tag1>
+        <tag2>maths</tag2>
+        <tag3>machine learning</tag3>
+        <tag4></tag4>
+        <summary>
+            Notes from a coursera course on machine learning. Machine learning problems that are classified as regression
+            problems are taking input variables and mapping the output to a continuous expected result function. These
+            notes provide the basic solution for a linear regression with multiple variable. Otherwise known as multivariate
+            linear regression.
+        </summary>
+
+        <contents><![CDATA[
+<p>The original coursera machine learning course can be found <a href="https://www.coursera.org/learn/machine-learning" target="_blank">here</a></p>
+
+<p>The <em>hypothesis function</em> is a linear equation that we use to estimate the output function. We use a series
+of steps later to resolve this function to within acceptable limits.</p>
+
+<img src="/data/img/multi-hypothesis.png" alt="hypothesis function"/>
+
+<p>We can make intial guesses for the parameters of the hypothesis function and use a <em>cost function</em> to measure the accuracy:</p>
+
+<img src="/data/img/multi-costfunction.png" alt="cost function" />
+
+<p>This can be vectorised as follows:</p>
+
+<img src="/data/img/multi_costfunction_vect.png" alt="vectorised cost function" />
+
+<p>Now that we have both an estimate in the form of an hypothesis function and a means to measure it's accuracy using
+the cost function, we need a way to automatically improve our hypothesis function. For this we use a <em>gradient descent equation</em>
+which, for the case of the linear regression simplifies to the following vectorised equation.</p>
+
+<img src="/data/img/multi_gradientdescent.png" alt="vectorised gradient descent" />
+
+<p><em>alpha</em> is the <em>learning rate</em> of the gradient descent equation, and m is the size of the <em>training set</em>.</p>
+
+<p>We can now repeat the gradient descent equation until the solution converges within an acceptable limit.</p>
+
+<p>Alternatively, given a training set with the right variables, we can solve the linear regression in a single
+step with the normal equation:</p>
+
+<img src="/data/img/normal-equation.png" alt="normal equation" />
+
+        ]]></contents>
+
+    </post>
+
+</blog>

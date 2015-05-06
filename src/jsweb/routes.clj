@@ -16,7 +16,7 @@
                                                                (db/get-all-with-tag (rcodec/url-decode tag)))}))
            (GET "/article" [title] (templates/article {:data (db/get-post 
                                                              (rcodec/url-decode title))}))
-           (GET "/about" [] (templates/about {:title "about jSolutions"}))
-           (GET "/contact" [] (templates/contact {:title "contact jSolutions"}))
+           (GET "/about" [] (templates/about {:title "jSolutions Ltd"}))
+           (GET "/contact" [] (templates/contact {:title "jSolutions Ltd"}))
            (route/resources "/")
-           (route/not-found "not found"))
+           (route/not-found "page not found"))

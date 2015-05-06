@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>you are not a gadget - flatness</title>
+        <date>2015-02-05 16:00:46</date>
+        <tag1>AI</tag1>
+        <tag2>ethics</tag2>
+        <tag3>books</tag3>
+        <tag4></tag4>
+        <summary>
+            Jaron Lanier's book describes how recent developments in our culture
+            and it's use of social networks, cloud computing and the internet are
+            eroding our sense of person and supressing individual expression.
+        </summary>
+
+        <contents><![CDATA[
+        <p>Jaron Lanier is a philosopher and computer scientist connected with UC
+        Berkeley. His book <a href="http://www.penguin.co.uk/books/you-are-not-a-gadget/9780141049113/">You are not a gadget</a>
+        is part apocalyptic vision and part a call to arms. In
+        the third chapter, he talks about how the flatness encouraged in internet design
+        and the attitudes and culture of parts of the open source movement
+         encourages blandness and meaninglessness. Here are some quotes that
+        particularly stood out for me. (some are partially edited - I hope he doesn't
+        mind)</p>
+
+        <p><em>"Let's suppose that back in the 1980s I had said, 'In a quarter century
+        when the digital revolution has made great advances and progress and computer
+        chips are millions of times faster than they are now, humanity will finally
+        win a prize of being able to write a new encyclopedia and a new version of
+        UNIX!' It would have sounded utterly pathetic."</em></p>
+
+        <p><em>"Some of the youngest, brightest minds have been trapped in a 1970s
+        intellectual framework because they are hypnotized into accepting old
+        software designs as if they were facts of nature. Linux is a superbly polished copy
+        of an antique - shinier than the original perhaps, but still defined by
+        it... The politically correct dogma that holds that open source is automatically
+        the best path to creativity and innovation is not borne out by the facts."</em></p>
+
+        ]]></contents>
+
+    </post>
+
+</blog>
