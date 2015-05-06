@@ -21,11 +21,11 @@
 <p>The <em>hypothesis function</em> is a linear equation that we use to estimate the output function. We use a series
 of steps later to resolve this function to within acceptable limits.</p>
 
-<img src="/data/img/multi-hypothesis.png" alt="hypothesis function"/>
+<img src="/data/img/multi_hypothesis.png" alt="hypothesis function"/>
 
 <p>We can make intial guesses for the parameters of the hypothesis function and use a <em>cost function</em> to measure the accuracy:</p>
 
-<img src="/data/img/multi-costfunction.png" alt="cost function" />
+<img src="/data/img/multi_costfunction.png" alt="cost function" />
 
 <p>This can be vectorised as follows:</p>
 
