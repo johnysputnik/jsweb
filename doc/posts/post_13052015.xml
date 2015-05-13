@@ -9,7 +9,7 @@
         <tag3>machine learning</tag3>
         <tag4>scilab</tag4>
         <summary>
-            An implementation of multivariate linear analysis, including normalization,
+            An implementation of multivariate linear regression, including normalization,
             using Scilab.
         </summary>
 
