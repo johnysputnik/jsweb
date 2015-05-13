@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<p>
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>multivariate linear regression with Scilab</title>
+        <date>2015-05-13 09:57:46</date>
+        <tag1>AI</tag1>
+        <tag2>maths</tag2>
+        <tag3>machine learning</tag3>
+        <tag4>scilab</tag4>
+        <summary>
+            An implementation of multivariate linear analysis, including normalization,
+            using Scilab.
+        </summary>
+
+        <contents><![CDATA[
+        <p>
     This post outlines some code written to implement a simple multivariate linear
     regression algorithm in <a href="http://www.scilab.org"  target="_blank">Scilab</a>. It was written whilst I was
     completing a course on Machine Learning to be found on Coursera
@@ -101,7 +110,7 @@ plot(1:size(J_history, "r"), J_history, '-g', 'LineWidth', 1);
 xtitle("Convergence of Cost Function", "Iterations", "Cost");
 </pre>
 
-<img src="/web/jsolutions_web/resources/public/data/img/multi_example_cost.png" alt="converging cost"/>
+<img src="/data/img/multi_example_cost.png" alt="converging cost"/>
 
 <p>
     As we can see that the cost converges, we can now use the values of
@@ -118,8 +127,14 @@ price = theta(1) + (theta(2) * norm_area) + (theta(3) * norm_bedrooms);
 
 <p>
     This code should scale nicely to large numbers of variables in the linear
-    equation and dataset.
+    equation and training data set.
+</p>
+<p>
+    The complete source file can be found <a href="/data/src/lin-reg.sci" target="_blank">here</a>.
 </p>
 
-</body>
-</html>
+        ]]></contents>
+
+    </post>
+
+</blog>
