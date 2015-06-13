@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<blog>
+
+    <post>
+        <title>Qt XML Syntax Highlighter</title>
+        <date>2015-06-13 15:26:46</date>
+        <tag1>C++</tag1>
+        <tag2>Qt</tag2>
+        <tag3>XML</tag3>
+        <tag4/>
+        <summary>
+            Qt provides a base class that can be used for highlighting text in
+            QTextDocument instances as displayed in various Qt controls.
+            This post shows how this can be used to highlight XML text.
+        </summary>
+
+        <contents><![CDATA[<p>
+Qt provides a base class that can be used for highlighting text in
+QTextDocument instances as displayed in various Qt controls. The
+Qt documentation fot the class can be found <a href="http://doc.qt.io/qt-5/qsyntaxhighlighter.html" target="_blank">here</a>.
+</p>
+<p>
+This example shows how this can be used to highlight XML text.
+</p>
+
+<p> This example follows the following state transitions, which is probably not
+ optimal, but expresses the states reasonably closely, enough to get a functioning
+ syntax highlighter. As this blog is mainly for my own note taking, I weill leave it to the
+ reader to improve it :)
+
+<img src="/data/img/xmleditor-highlight-states.png" alt="XML syntax highlighter state chart" />
+ </p>
+
+<p>Here is the class declaration:
+
+<pre class="prettyprint lang-cpp">// An XML syntax highlighter
+//
+class XMLHighlighter : public QSyntaxHighlighter
+{
+    Q_OBJECT
+
+public:
+    // ctor
+    XMLHighlighter(QTextDocument *parent = 0);
+
+protected:
+    // An overridden highlight method for highlighting
+    // patterms based on the rules defined in this class
+    //
+    void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
+
+private:
+
+    QTextCharFormat validElementFormat; // The format for XML elements
+    QTextCharFormat attributeNameFormat; // The format for XML attribute names
+    QTextCharFormat attributeValueFormat; // The format for XML attribute values
+    QTextCharFormat commentFormat; // formatting for XML comments
+};</pre>
+</p>
+
+
+<p>And the method definitions:
+
+<pre class="prettyprint lang-cpp">// XML syntax highlighter
+//
+
+// default ctor
+//
+XMLHighlighter::XMLHighlighter(QTextDocument *parent)
+    :QSyntaxHighlighter(parent)
+{
+    attributeValueFormat.setForeground(Qt::darkGreen);
+    attributeValueFormat.setFontWeight(QFont::Normal);
+
+    validElementFormat.setForeground(Qt::darkBlue);
+    validElementFormat.setFontWeight(QFont::Bold);
+
+    attributeNameFormat.setForeground(Qt::darkRed);
+    attributeNameFormat.setFontWeight(QFont::Bold);
+
+    commentFormat.setForeground(Qt::gray);
+    commentFormat.setFontItalic(true);
+}
+
+// An overridden highlight method for highlighting
+// patterms based on the rules defined in this class
+//
+void XMLHighlighter::highlightBlock(const QString &text)
+{
+
+    enum {
+        NormalState = -1,
+        Element,
+        AttributeName,
+        AttributeEquals,
+        AttributeValue,
+        Comment
+    };
+
+    int state = previousBlockState();
+    int offset = 0;
+
+    for (int i = 0; i < text.length(); ++i)
+    {
+        switch(state)
+        {
+        case Element:
+
+            if (text.mid(i, 1) == ">")
+            {
+                state = NormalState;
+                setFormat(offset, i - offset + 1, validElementFormat);
+            }
+
+            if (text.mid(i, 1) == " ")
+            {
+                state = AttributeName;
+                setFormat(offset, i - offset, validElementFormat);
+                offset = i + 1;
+            }
+
+            break;
+        case AttributeName:
+
+            if (text.mid(i, 1) == "=")
+            {
+                state = AttributeEquals;
+                setFormat(offset, i - offset, attributeNameFormat);
+                offset = i;
+            }
+
+            if (text.mid(i, 1) == ">")
+            {
+                state = NormalState;
+                setFormat(offset, i - offset + 1, validElementFormat);
+            }
+
+            break;
+        case AttributeEquals:
+
+            if (text.mid(i, 1) == "\"")
+            {
+                state = AttributeValue;
+                setFormat(offset, i - offset, attributeNameFormat);
+                offset = i;
+            }
+
+            break;
+        case AttributeValue:
+
+            if (text.mid(i, 1) == "\"")
+            {
+                state = AttributeName;
+                setFormat(offset, i - offset + 1, attributeValueFormat);
+                offset = i + 1;
+            }
+
+            break;
+        case Comment:
+
+            if (text.mid(i, 3) == "-->")
+            {
+                state = NormalState;
+                setFormat(offset, i - offset + 3, commentFormat);
+            }
+        default:
+
+            if (text.mid(i, 4) == "&gt;!--")
+            {
+                offset = i;
+                state = Comment;
+            }
+            else if (text.mid(i, 1) == "&gt;")
+            {
+                offset = i;
+                state = Element;
+            }
+
+            break;
+        }
+    }
+}</pre>
+</p>
+
+]]></contents>
+
+    </post>
+
+</blog>

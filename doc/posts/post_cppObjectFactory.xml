@@ -4,9 +4,9 @@
   <post>
     <title>a C++ object factory</title>
     <date>2013-01-17 14:56:46</date>
-    <tag1>C++11</tag1>
+    <tag1>C++</tag1>
     <tag2>Patterns</tag2>
-    <tag3>VS2010</tag3>
+      <tag3/>
     <tag4/>
     <summary>
       In object oriented programming, it is very common to have a scenario where a large
