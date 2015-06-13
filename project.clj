@@ -3,6 +3,7 @@
   :url "http://www.jsolutions.co.uk"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/java.jdbc "0.3.2"]
+				 [org.clojure/tools.nrepl "0.2.10"]
                  [ring/ring-codec "1.0.0"]
                  [ring/ring-core "1.2.1"]
                  [ring/ring-jetty-adapter "1.2.1"]
@@ -16,6 +17,7 @@
                  [postgresql "9.1-901.jdbc4"]
                  [me.raynes/fs "1.4.6"]]
   :min-lein-version "2.0.0"
+  :main jsweb.core
   :plugins [[lein-less "1.7.2"]
             [lein-asset-minifier "0.2.2"]
             [environ/environ.lein "0.2.1"]
@@ -25,6 +27,6 @@
   :minify-assets {:assets {"resources/public/css/stylesheet.min.css" "target/temp/css"
                            "resources/public/js/script.js" "src/js"}}
   :uberjar-name "jsolutions-web-standalone.jar"
-  :profiles {:production {:env {:production true}}})
+  :profiles {:uberjar {:aot :all}})
 
 

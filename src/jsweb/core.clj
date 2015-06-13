@@ -5,7 +5,9 @@
             [compojure.handler :refer [site]]
             [ring.adapter.jetty :refer [run-jetty]]
             [environ.core :refer [env]]
-            [jsweb.database :as data]))
+            [jsweb.database :as data]
+			[clojure.tools.nrepl.server :only (start-server stop-server)])
+	(:gen-class))
 
 
 
@@ -13,5 +15,6 @@
 
 (defn -main [& [port]]
   (data/createdb)
-  (let [port (Integer. (or port (env :port) 5000))]
-    (run-jetty (site #'app) {:port port :join? false})))
+  (let [port (Integer. (or port (env :port) 8080))]
+    (run-jetty (site #'app) {:port port :join? false})
+	(defonce server (clojure.tools.nrepl.server/start-server :port 7888))))
