@@ -17,8 +17,8 @@
 //    http://dimitros.net/en/blog/complyingwiththecookielaw    
 // 
 // 3 (03-April-2013) SAH - Added a variable that allows the developer to 
-//	  select if the script redirects (as it originally did) or carry’s
-//    on (as per Dimitri’s great addition).
+//	  select if the script redirects (as it originally did) or carryï¿½s
+//    on (as per Dimitriï¿½s great addition).
 // 
 // Download from http://adf.ly/IvElY
 
@@ -44,7 +44,7 @@ function displayNotification(c_action) {
     message = message + "<div style='text-align:center;margin:0px;padding:10px;width:auto;background:white;color:black;font-size:90%;'>";
 
     // this is the message displayed to the user.
-    message = message + "On 26 May 2011, the rules about cookies on websites changed. This site uses cookies. We have already set cookies which are essential for the operation of this site. <a href=\"http://cookieok.eu/cookie-rules-regulations\">More Information</a>.<br/>";
+    message = message + "On 26 May 2011, the expertsystem about cookies on websites changed. This site uses cookies. We have already set cookies which are essential for the operation of this site. <a href=\"http://cookieok.eu/cookie-expertsystem-regulations\">More Information</a>.<br/>";
 
     // Displays the I agree/disagree buttons.
     // Feel free to change the address of the I disagree redirection to either a non-cookie site or a Google or the ICO web site 

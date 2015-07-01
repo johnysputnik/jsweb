@@ -1,0 +1,49 @@
+
+
+.... Programmer without a computer science background.
+
+
+
+(defun sum (term a next b)
+  (if (> a b)
+      0
+      (+ (funcall term a)
+         (sum term
+              (funcall next a)
+              next
+              b))))
+
+
+(defun sum-int (a b)
+  (sum (function identity)
+       a
+       (function inc)
+       b))
+
+
+(defun sum-sq (a b)
+  (sum (lambda (x) (* x x))
+       a
+       (function inc)
+       b))
+
+
+
+        Question to Harold Abelson during SICP lectures.
+
+        Q : What does this delaying the decision making through abstraction layers do to the maxim of "Do all your design before any of your code" ?
+
+        A : Well, that's someone's axiom and I bet that's someone who hasn't implemented very large computer systems very much. Computer science is a lot like magic and it's good that it's a lot like magic. There's a bad part of computer science that is a lot like religion.
+
+
+You can implement any data abstraction out of nothing but procedures.
+
+
+(defun cons (a b) (lambda (pick)
+(cond ((= pick 1) a)
+      ((= pick 2) b))))
+
+(defun car (x) (x 1))
+(defun cdr (x) (x 2))
+
+
