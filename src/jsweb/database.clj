@@ -10,18 +10,18 @@
 (defn migrated?
   "Check if the database is correct"
   []
-  (-> (sql/query dbspec 
+  (-> (sql/query dbspec
                  [(str "select count(*) from information_schema.tables "
                        "where table_name='blog_posts'")])
-      first 
-      :count 
+      first
+      :count
       pos?))
 
 (defn createdb
   "Create the database tables"
   []
   (when (not (migrated?))
-    (print "Creating database structure...") 
+    (print "Creating database structure...")
     (flush)
     (sql/db-do-commands dbspec
                         (sql/create-table-ddl
@@ -47,13 +47,13 @@
                         "CREATE INDEX title_ix ON blog_posts ( title )")
     (println " done")))
 
-(defn dropdb 
+(defn dropdb
   "Drop the database tables"
   []
   (sql/db-do-commands dbspec
                       "DROP TABLE IF EXISTS blog_posts"))
 
-(defn get-all 
+(defn get-all
   "Get a summary of all posts"
   [& limit]
   (into [] (sql/query dbspec
@@ -106,10 +106,10 @@
   and extract all the tag values into a list before using that
   list to call create-post"
   [file-list]
-  (map #(->> (xml/parse %) 
-             :content 
-             first 
-             :content 
+  (map #(->> (xml/parse %)
+             :content
+             first
+             :content
              (map :content)
              (map first)
              (create-post))
@@ -122,6 +122,3 @@
     (dropdb)
     (createdb)
     (load-xml-posts (fs/find-files dir #"post_.*\.xml"))))
-  
-
-

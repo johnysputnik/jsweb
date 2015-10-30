@@ -18,7 +18,7 @@
                  [me.raynes/fs "1.4.6"]]
   :min-lein-version "2.0.0"
   :main jsweb.core
-  :plugins [[lein-less "1.7.2"]
+  :plugins [[lein-less "1.7.5"]
             [lein-asset-minifier "0.2.2"]
             [environ/environ.lein "0.2.1"]
             [cider/cider-nrepl "0.8.2"]]

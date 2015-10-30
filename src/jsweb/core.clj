@@ -15,6 +15,6 @@
 
 (defn -main [& [port]]
   (data/createdb)
-  (let [port (Integer. (or port (env :port) 8080))]
+  (let [port (Integer. (or port (env :port) 80))]
     (run-jetty (site #'app) {:port port :join? false})
 	(defonce server (clojure.tools.nrepl.server/start-server :port 7888))))
