@@ -20,6 +20,6 @@
            (GET "/contact" [] (templates/contact {:title "jSolutions Ltd"}))
 		   (GET "/reload" [] 
 			 (db/reload-posts "./doc/posts")
-			 ("done"))
+			 "done")
            (route/resources "/")
            (route/not-found "page not found"))
