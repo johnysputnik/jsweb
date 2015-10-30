@@ -18,5 +18,8 @@
                                                              (rcodec/url-decode title))}))
            (GET "/about" [] (templates/about {:title "jSolutions Ltd"}))
            (GET "/contact" [] (templates/contact {:title "jSolutions Ltd"}))
+		   (GET "/reload" [] 
+			 (db/reload-posts "./doc/posts")
+			 ("done"))
            (route/resources "/")
            (route/not-found "page not found"))
