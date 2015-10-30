@@ -106,6 +106,7 @@
   and extract all the tag values into a list before using that
   list to call create-post"
   [file-list]
+  (print file-list)
   (map #(->> (xml/parse %)
              :content
              first
